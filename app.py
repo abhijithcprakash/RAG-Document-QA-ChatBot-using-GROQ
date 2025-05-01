@@ -38,7 +38,7 @@ prompt = ChatPromptTemplate.from_template(
 # Function to create vector embeddings
 def create_vector_embedding(file_path):
     if "vectors" not in st.session_state:
-        st.session_state.embeddings = OllamaEmbeddings(model="gemma:2b")
+        st.session_state.embeddings = embeddings
         loader = PyPDFLoader(file_path)
         docs = loader.load()
         if len(docs) == 0:
