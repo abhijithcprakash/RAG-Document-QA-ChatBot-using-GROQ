@@ -14,3 +14,4 @@ PyPDF2
 gradio
 huggingface_hub
 langchain-huggingface
+langchain_huggingface
