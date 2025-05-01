@@ -40,6 +40,11 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
+      - name: Add all changes
+        run: |
+          git add .
+          git commit -m "Force push all files to Hugging Face Hub" || echo "No changes to commit"
+
       - name: Force push to Hugging Face Hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
