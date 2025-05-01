@@ -40,10 +40,9 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-      - name: Sync with Hugging Face Hub
+      - name: Force push to Hugging Face Hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           git remote set-url origin https://abhijithcprakash:${HF_TOKEN}@huggingface.co/spaces/abhijithcprakash/Chat_GROQ
-          git pull origin main --rebase
-          git push origin main
+          git push origin main --force
