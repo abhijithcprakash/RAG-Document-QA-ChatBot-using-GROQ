@@ -1,7 +1,7 @@
 import streamlit as st
 import os
 from langchain_groq import ChatGroq
-from langchain_ollama import OllamaEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
@@ -10,24 +10,17 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFLoader
 from dotenv import load_dotenv
 import time
+from huggingface_hub import login
 
-# Load environment variables
-load_dotenv()
-# os.environ['GROQ_API_KEY'] = os.getenv('GROQ_API_KEY')
-# os.environ['LANGCHAIN_API_KEY'] = os.getenv('LANGCHAIN_API_KEY')
-# os.environ['LANGCHAIN_TRACING_V2'] = "true"
-# os.environ['LANGCHAIN_PROJECT'] = "RAG Docs Q&A Chatbot"
-# os.environ['HUGGINGFACE_API'] = os.getenv("HUGGINGFACE_API")
-
-# # Initialize LLM
-# groq_api_key = os.getenv('GROQ_API_KEY')
 
 groq_api_key = st.secrets["api_keys"]["GROQ_API_KEY"]
 langchain_api_key = st.secrets["api_keys"]["LANGCHAIN_API_KEY"]
-huggingface_api = st.secrets["api_keys"]["HUGGINGFACE_API"]
+huggingface_api_key = st.secrets["api_keys"]["HUGGINGFACE_API"]
 
+login(huggingface_api_key)  # This will authenticate Hugging Face
 
 llm = ChatGroq(groq_api_key=groq_api_key, model_name="Llama3-8b-8192")
+embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 # Prompt Template
 prompt = ChatPromptTemplate.from_template(
